@@ -1,4 +1,4 @@
-Player,Number,Position,Country,Age,Height,Games,Minutes,Points,Rebounds,Assists,Steals,Turnovers,Blocks
+Player,Club,Number,Position,Country,Age,Height,Games,Minutes,Points,Rebounds,Assists,Steals,Turnovers,Blocks
 Shane Larkin,Anadolu Efes,0,Guard,USA,28,182,35,1003,528,81,144,43,74,3
 Rodrigue Beaubois,Anadolu Efes,1,Guard,France,32,190,38,814,401,69,68,20,44,13
 Chris Singleton,Anadolu Efes,2,Forward,USA,31,206,41,904,249,155,26,30,24,21
