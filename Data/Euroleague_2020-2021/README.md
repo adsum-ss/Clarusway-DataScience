@@ -1,4 +1,4 @@
-## **DESCRIPTION OF DATASETS**
+## **DESCRIPTION OF DATASETS** 🏀
   
 These statistical data refer to the Euroleague 2020-2021 season.
 
@@ -15,6 +15,15 @@ Number of games played by each club (full season):
 In the creation of the data, the Turkish Airlines Euroleague official website and the official websites of the relevant teams were used.
 
 https://www.euroleague.net/
+
+***
+
+### abbreviations in the datasets
+
+| FG             | FT             | Blocks(Fv)      | Blocks(Ag)     | Fouls(Cm)       | Fouls(Rv)      | PIR             |
+| -------------- | -------------- | --------------- | -------------- | --------------- | -------------- | --------------- |
+| Field Goals    | Free Throws    | Blocks In Favor | Blocks Against | Fouls           | Fouls          | Performance     |
+| Made-Attempted | Made-Attempted |                 |                | Commited        | Received       | Index Rating    |
 
 ***
 
