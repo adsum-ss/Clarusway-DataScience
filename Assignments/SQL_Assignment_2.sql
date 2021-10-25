@@ -9,23 +9,23 @@
 
 -- Visitor_ID      Adv_Type      Action
 
---     1              A			  Left
---     2			  A			  Order
---     3			  B			  Left
---     4			  A			  Order
---     5			  A			  Review
---     6			  A			  Left
---     7			  B			  Left
---     8			  B			  Order
---     9			  B			  Review
---     10			  A			  Review
+--     1              A		  Left
+--     2	      A		  Order
+--     3	      B		  Left
+--     4	      A		  Order
+--     5	      A		  Review
+--     6	      A		  Left
+--     7	      B		  Left
+--     8	      B		  Order
+--     9	      B		  Review
+--     10	      A		  Review
 
 -- Desired Output:
 
 -- Adv_Type		Conversion_Rate
 
---    A				 0.33
---    B				 0.25
+--    A			     0.33
+--    B			     0.25
 
 
 -- a. Create above table (Actions) and insert values,
@@ -75,7 +75,7 @@ FROM
 	GROUP BY Adv_Type
 ) AS T
 	FULL OUTER JOIN (SELECT Adv_Type, COUNT(Action) AS TotalOrders
-					 FROM Actions
-					 WHERE Action='Order'
-					 GROUP BY Adv_Type, Action) AS O
+			 FROM Actions
+			 WHERE Action='Order'
+			 GROUP BY Adv_Type, Action) AS O
 	ON T.Adv_Type=O.Adv_Type
