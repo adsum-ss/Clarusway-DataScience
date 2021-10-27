@@ -67,7 +67,7 @@ GROUP BY Adv_Type, Action
 -- casting as float by multiplying by 1.0.
 
 SELECT
-	T.Adv_Type, CAST(CAST(TotalOrders AS float)/TotalActions AS DECIMAL(38,2)) AS Conversion_Rate
+	T.Adv_Type, CAST(CAST(TotalOrders AS float)/TotalActions AS DECIMAL(18,2)) AS Conversion_Rate
 FROM
 (
 	SELECT Adv_Type, COUNT(Action) AS TotalActions
