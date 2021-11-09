@@ -5,8 +5,8 @@
 
 SELECT S.product_id, B.brand_name, P.product_name, SUM(S.quantity) AS TotalQuantity
 FROM sale.order_item AS S 
-	 INNER JOIN product.product AS P ON S.product_id=P.product_id 
-	 INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
+     INNER JOIN product.product AS P ON S.product_id=P.product_id 
+     INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
 GROUP BY S.product_id, B.brand_name, P.product_name
 ORDER BY TotalQuantity DESC;
 
@@ -16,8 +16,8 @@ ORDER BY TotalQuantity DESC;
 
 SELECT TOP 5 P.product_id, P.product_name, B.brand_name, C.category_name, P.list_price
 FROM product.product AS P
-	 INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
-	 INNER JOIN product.category AS C ON P.category_id=C.category_id
+     INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
+     INNER JOIN product.category AS C ON P.category_id=C.category_id
 ORDER BY list_price DESC;
 
 SELECT TOP 5 *
@@ -30,29 +30,29 @@ ORDER BY list_price DESC;
 
 SELECT B.brand_name, C.category_name --, COUNT(P.product_id) AS TotalNumber
 FROM product.product AS P
-	 INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
-	 INNER JOIN product.category AS C ON P.category_id=C.category_id
+     INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
+     INNER JOIN product.category AS C ON P.category_id=C.category_id
 GROUP BY B.brand_name, C.category_name
 ORDER BY B.brand_name, C.category_name
 
 -----------------------
 
 SELECT * FROM
-	(SELECT category_name, brand_name, product_id
-	 FROM product.product AS P
-		INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
-		INNER JOIN product.category AS C ON P.category_id=C.category_id
-	 ) AS BaseData
+      (SELECT category_name, brand_name, product_id
+       FROM product.product AS P
+	    INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
+	    INNER JOIN product.category AS C ON P.category_id=C.category_id
+      ) AS BaseData
 PIVOT(
-	 COUNT(product_id)
-	 FOR category_name
-	 IN ([Children Bicycles]
-		 ,[Comfort Bicycles]
-		 ,[Cruisers Bicycles]
-		 ,[Cyclocross Bicycles]
-		 ,[Electric Bikes]
-		 ,[Mountain Bikes]
-		 ,[Road Bikes])
+    COUNT(product_id)
+    FOR category_name
+    IN ([Children Bicycles]
+	,[Comfort Bicycles]
+	,[Cruisers Bicycles]
+	,[Cyclocross Bicycles]
+	,[Electric Bikes]
+	,[Mountain Bikes]
+	,[Road Bikes])
 ) AS PivotTable
 
 -- /////////////////////////////////////////////////////////////
@@ -60,29 +60,29 @@ PIVOT(
 -- - Select the avg prices according to brands and categories
 
 SELECT brand_name,
-		CONVERT(DECIMAL, [Children Bicycles]) AS [Children Bicycles],
-		CONVERT(DECIMAL, [Comfort Bicycles]) AS [Comfort Bicycles],
-		CONVERT(DECIMAL, [Cruisers Bicycles]) AS [Cruisers Bicycles],
-		CONVERT(DECIMAL, [Cyclocross Bicycles]) AS [Cyclocross Bicycles],
-		CONVERT(DECIMAL, [Electric Bikes]) AS [Electric Bikes],
-		CONVERT(DECIMAL, [Mountain Bikes]) AS [Mountain Bikes],
-		CONVERT(DECIMAL, [Road Bikes]) AS [Road Bikes]
+       CONVERT(DECIMAL, [Children Bicycles]) AS [Children Bicycles],
+       CONVERT(DECIMAL, [Comfort Bicycles]) AS [Comfort Bicycles],
+       CONVERT(DECIMAL, [Cruisers Bicycles]) AS [Cruisers Bicycles],
+       CONVERT(DECIMAL, [Cyclocross Bicycles]) AS [Cyclocross Bicycles],
+       CONVERT(DECIMAL, [Electric Bikes]) AS [Electric Bikes],
+       CONVERT(DECIMAL, [Mountain Bikes]) AS [Mountain Bikes],
+       CONVERT(DECIMAL, [Road Bikes]) AS [Road Bikes]
 FROM
-	(SELECT category_name, brand_name, list_price
-	 FROM product.product AS P
-		  INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
-		  INNER JOIN product.category AS C ON P.category_id=C.category_id
-	 ) AS BaseData
+    (SELECT category_name, brand_name, list_price
+     FROM product.product AS P
+	  INNER JOIN product.brand AS B ON P.brand_id=B.brand_id
+	  INNER JOIN product.category AS C ON P.category_id=C.category_id
+    ) AS BaseData
 PIVOT(
-	 AVG(list_price)
-	 FOR category_name
-	 IN ([Children Bicycles]
-		 ,[Comfort Bicycles]
-		 ,[Cruisers Bicycles]
-		 ,[Cyclocross Bicycles]
-		 ,[Electric Bikes]
-		 ,[Mountain Bikes]
-		 ,[Road Bikes])
+    AVG(list_price)
+    FOR category_name
+    IN ([Children Bicycles]
+	,[Comfort Bicycles]
+	,[Cruisers Bicycles]
+	,[Cyclocross Bicycles]
+	,[Electric Bikes]
+	,[Mountain Bikes]
+	,[Road Bikes])
 ) AS PivotTable
 
 -- //////////////////////////////////////////////////////////////
@@ -91,8 +91,8 @@ PIVOT(
 
 SELECT B.brand_name, P.model_year, SUM(S.quantity) AS TotalAmountPerYear
 FROM product.brand AS B 
-	 INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
-	 INNER JOIN product.stock AS S ON P.product_id=S.product_id
+     INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
+     INNER JOIN product.stock AS S ON P.product_id=S.product_id
 GROUP BY B.brand_name, P.model_year
 ORDER BY b.brand_name, model_year
 
@@ -100,25 +100,25 @@ ORDER BY b.brand_name, model_year
 
 SELECT b.brand_name, p.model_year, SUM(o.quantity) AS TotalAmountPerYear
 FROM product.brand AS B 
-	 INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
-	 INNER JOIN sale.order_item AS O ON O.product_id=P.product_id
+     INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
+     INNER JOIN sale.order_item AS O ON O.product_id=P.product_id
 GROUP BY B.brand_name, P.model_year
 ORDER BY B.brand_name, P.model_year
 
 ----------------------------------
 
 SELECT * FROM
-	(SELECT brand_name, model_year, quantity
-	 FROM product.brand AS B 
-		  INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
-		  INNER JOIN sale.order_item AS O ON O.product_id=P.product_id) AS BaseData
+     (SELECT brand_name, model_year, quantity
+      FROM product.brand AS B 
+	   INNER JOIN product.product AS P ON B.brand_id=P.brand_id 
+	   INNER JOIN sale.order_item AS O ON O.product_id=P.product_id) AS BaseData
 PIVOT (
-	SUM(quantity)
-	FOR model_year
-	IN ([2018]
-		,[2019]
-		,[2020])  -- 2021
-) AS PivotTable
+     SUM(quantity)
+     FOR model_year
+     IN ([2018]
+	 ,[2019]
+	 ,[2020])  -- 2021
+      ) AS PivotTable
 ORDER BY brand_name
 
 -- ////////////////////////////////////////////////////////
@@ -126,14 +126,13 @@ ORDER BY brand_name
 -- - Select the least 3 products in stock according to stores
 
 WITH CTE1 AS
-	 (SELECT *
-	  FROM(SELECT *, ROW_NUMBER() OVER(PARTITION BY store_id ORDER BY store_id, quantity) AS RowNumber
-		   FROM product.stock) AS SUBQ1
-	  WHERE RowNumber BETWEEN 1 AND 3
-	 )
+     (SELECT *
+      FROM(SELECT *, ROW_NUMBER() OVER(PARTITION BY store_id ORDER BY store_id, quantity) AS RowNumber
+	   FROM product.stock) AS SUBQ1
+      WHERE RowNumber BETWEEN 1 AND 3)
 SELECT CTE1.store_id, B.store_name, P.product_id, P.product_name, CTE1.quantity
 FROM CTE1 INNER JOIN sale.store AS B ON CTE1.store_id=B.store_id
-		  INNER JOIN product.product AS P ON CTE1.product_id=P.product_id
+	  INNER JOIN product.product AS P ON CTE1.product_id=P.product_id
 
 -- /////////////////////////////////////////////////////////////
 
@@ -172,20 +171,20 @@ ORDER BY TotalSalesAmount DESC;
 SELECT *
 FROM(SELECT *, ROW_NUMBER() OVER(PARTITION BY [date] ORDER BY [date], TotalNumber) AS RowNumber
      FROM(SELECT product_id, YEAR(order_date) AS [date], SUM(quantity) AS TotalNumber
-	      FROM sale.order_item AS A INNER JOIN sale.orders AS B ON A.order_id=B.order_id
-	      WHERE YEAR(order_date) IN (2018,2019)
-	      GROUP BY product_id, YEAR(order_date)) AS SUBQ1) AS SUBQ2
-WHERE RowNumber BETWEEN 1 AND 3
+	  FROM sale.order_item AS A INNER JOIN sale.orders AS B ON A.order_id=B.order_id
+	  WHERE YEAR(order_date) IN (2018,2019)
+	  GROUP BY product_id, YEAR(order_date)) AS SUBQ1) AS SUBQ2
+WHERE RowNumber BETWEEN 1 AND 3;
 
 -- //////////////////////////////////////////////////////////////
 
 -- 1. Find the customers who placed at least two orders per year.
 
 WITH CTE1 AS
-	 (SELECT customer_id, YEAR(order_date) AS [DATE], count(order_id) AS OrderNumber
-	  FROM sale.orders
-	  GROUP BY customer_id, YEAR(order_date)
-	  HAVING COUNT(order_id) > 1)
+     (SELECT customer_id, YEAR(order_date) AS [DATE], count(order_id) AS OrderNumber
+      FROM sale.orders
+      GROUP BY customer_id, YEAR(order_date)
+      HAVING COUNT(order_id) > 1)
 SELECT CTE1.customer_id, C.first_name, C.last_name, CTE1.OrderNumber 
 FROM CTE1 INNER JOIN sale.customer AS C ON CTE1.customer_id=C.customer_id;
 
@@ -203,12 +202,12 @@ FROM CTE1 INNER JOIN sale.customer AS C ON CTE1.customer_id=C.customer_id;
 */
 
 SELECT A.order_id, SUM((quantity*list_price)*(1-discount)) AS TotalAmount,
-	   CASE WHEN SUM((quantity*list_price)*(1-discount)) < 500 THEN 'very low'
-	        WHEN SUM((quantity*list_price)*(1-discount)) < 1000 THEN 'low'
-			WHEN SUM((quantity*list_price)*(1-discount)) < 5000 THEN 'medium'
-			WHEN SUM((quantity*list_price)*(1-discount)) < 10000 THEN 'high'
-			WHEN SUM((quantity*list_price)*(1-discount)) > 10000 THEN 'very high'
-	   END TotalAmountCategory
+       CASE WHEN SUM((quantity*list_price)*(1-discount)) < 500 THEN 'very low'
+	    WHEN SUM((quantity*list_price)*(1-discount)) < 1000 THEN 'low'
+	    WHEN SUM((quantity*list_price)*(1-discount)) < 5000 THEN 'medium'
+	    WHEN SUM((quantity*list_price)*(1-discount)) < 10000 THEN 'high'
+	    WHEN SUM((quantity*list_price)*(1-discount)) > 10000 THEN 'very high'
+       END TotalAmountCategory
 FROM sale.order_item AS A INNER JOIN sale.orders AS B ON A.order_id=B.order_id
 WHERE YEAR(order_date) = 2020
 GROUP BY A.order_id
@@ -220,10 +219,10 @@ GROUP BY A.order_id
 SELECT customer_id, first_name, last_name
 FROM sale.customer AS C
 WHERE EXISTS (SELECT COUNT(O.order_id) AS OrderNumber 
-			  FROM sale.orders AS O 
-			  WHERE C.customer_id=O.customer_id
-			  GROUP BY O.customer_id
-			  HAVING COUNT(O.order_id) > 2)
+	      FROM sale.orders AS O 
+	      WHERE C.customer_id=O.customer_id
+	      GROUP BY O.customer_id
+	      HAVING COUNT(O.order_id) > 2)
 ORDER BY C.customer_id;
 
 -- /////////////////////////////////////////////////////////////////
@@ -242,7 +241,7 @@ HAVING COUNT(O.item_id) > 2;
 
 SELECT O.product_id, P.product_name, COUNT(order_id) AS TotalCount
 FROM sale.order_item AS O 
-	 INNER JOIN product.product AS P ON O.product_id=P.product_id
+     INNER JOIN product.product AS P ON O.product_id=P.product_id
 GROUP BY O.product_id, P.product_name
 ORDER BY O.product_id, P.product_name
 
@@ -252,7 +251,7 @@ ORDER BY O.product_id, P.product_name
 
 SELECT product_id
 FROM
-	(SELECT brand_id, product_id, list_price, 
-		    AVG(list_price) OVER(PARTITION BY brand_id) AS AvgListPriceofBrands
-	 FROM product.product) AS SUBQ
+   (SELECT brand_id, product_id, list_price, 
+           AVG(list_price) OVER(PARTITION BY brand_id) AS AvgListPriceofBrands
+    FROM product.product) AS SUBQ
 WHERE list_price > AvgListPriceofBrands
